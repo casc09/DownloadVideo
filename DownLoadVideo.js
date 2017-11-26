@@ -40,8 +40,11 @@ function download() {
 
                 if (key == "duration") {
                     var durationValue = parseInt(value);
-                    durationValue=durationValue/60;
-                    var duration = "<p style=\"font-size: medium; \">  Duration: " + durationValue.toString() + " min</p>  ";
+                    durationValueInt=parseInt(durationValue/60) ;
+                    durationValueFloat=durationValue-durationValueInt*60;
+
+                    var duration = "<p style=\"font-size: medium; \">  Duration: " + durationValueInt.toString() + " min "+durationValueFloat.toString()+
+                        " s</p>  ";
                     $("#duration").append(duration);
                 }
                 // if (key == "description") {
@@ -53,6 +56,12 @@ function download() {
                     audio = value;
                     $.each(audio, function (key, value) {
 
+                      var video="<div class=\"col-md-12 \" id=\"hd720\" style=\"height: 30px\">\n" +
+                          "            <a href=\"#\" >\n" +
+                          "              免费域名注册\n" +
+                          "            </a>\n" +
+                          "          </div>"
+                      $("#video").append(video);
 
                     })
                 }
