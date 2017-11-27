@@ -10,10 +10,7 @@ function download() {
 
 
     var jsontree = [];
-    var audio = [];
-    var videosSmall = [];
-    var videosMedium = [];
-    var videoHd720 = [];
+
 
     $.ajax({
         url: getVideoInfoUrl,
@@ -29,7 +26,9 @@ function download() {
                     }
                 }
                 if (key == "thumbnail") {
-                    var img = "<img src=\" " + value + " \"> ";
+                    var img = "<img style=\" width: auto;\n" +
+                        "    height: 90px;\n" +
+                        "    objec-fit: cover;\" src=\" " + value + " \"> ";
                     $("#thumbnail").append(img);
 
                 }
@@ -52,31 +51,70 @@ function download() {
                 //     $("#description").append(description);
                 // }
 
-                if (key == "audio") {
-                    audio = value;
-                    $.each(audio, function (key, value) {
+                if (key == "audios") {
 
-                      var video="<div class=\"col-md-12 \" id=\"hd720\" style=\"height: 30px\">\n" +
-                          "            <a href=\"#\" >\n" +
-                          "              免费域名注册\n" +
-                          "            </a>\n" +
-                          "          </div>"
-                      $("#video").append(video);
+                    $.each(value, function (key, value) {
+                       var audioFormat;
+                       var audioAbr;
+                       var audioUrl;
+                       $.each(value, function (key, value) {
+                           if (key == "format_note"){
+                             audioFormat = value;
+                           }
+                           if (key == "abr"){
+                               audioAbr = value;
+                           }
+                           if (key == "url"){
+                               audioUrl = value;
+                           }
+                       })
+                       var audioHtml="<div class=\"col-md-12 \" id=\"hd720\" style=\"height: 30px\">" +
+                           "            <a href=\"" + audioUrl+"\" >" +
+                           audioFormat + "(" + audioAbr + "kbps)"
+                           "            </a>" +
+                           "          </div>"
+                       $("#audio").append(audioHtml);
+                   })
 
-                    })
                 }
                 if (key == "videosSmall") {
-                    videosSmall = value;
+                    addListToHtml(value);
                 }
                 if (key == "videosMedium") {
-                    videosMedium = value;
+                    addListToHtml(value);
                 }
                 if (key == "videoHd720") {
-                    videoHd720 = value;
+                    addListToHtml(value);
                 }
             });
         }
     });
 
+
+}
+
+function  addListToHtml(value) {
+    $.each(value, function (key, value) {
+        var videoFormat;
+        var videoResolution ;
+        var videoUrl;
+        $.each(value, function (key, value) {
+            if (key == "ext"){
+                videoFormat = value;
+            }
+            if (key == "resolution"){
+                videoResolution = value;
+            }
+            if (key == "url"){
+                videoUrl = value;
+            }
+        })
+        var videoHtml="<div class=\"col-md-12 \" id=\"hd720\" style=\"height: 30px\">" +
+            "            <a href=\"" + videoUrl+"\" >" +
+            videoFormat + "(" + videoResolution + ")"
+        "            </a>" +
+        "          </div>"
+        $("#video").append(videoHtml);
+    })
 
 }
