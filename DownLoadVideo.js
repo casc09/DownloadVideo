@@ -20,7 +20,7 @@ function download() {
             jsontree = result;
             $.each(jsontree, function (key, value) {
                 if (key == "success") {
-                    $("#myDiv").append(key + "-------" + value + "  ++ ");
+
                     if (value == "no") {
                         return;
                     }
@@ -68,7 +68,7 @@ function download() {
                                audioUrl = value;
                            }
                        })
-                       var audioHtml="<div class=\"col-md-12 \" id=\"hd720\" style=\"height: 30px\">" +
+                       var audioHtml="<div class=\"col-md-12 \" id=\"hd720\" target=\"blank\" style=\"height: 30px\">" +
                            "            <a href=\"" + audioUrl+"\" >" +
                            audioFormat + "(" + audioAbr + "kbps)"
                            "            </a>" +
@@ -109,7 +109,7 @@ function  addListToHtml(value) {
                 videoUrl = value;
             }
         })
-        var videoHtml="<div class=\"col-md-12 \" id=\"hd720\" style=\"height: 30px\">" +
+        var videoHtml="<div class=\"col-md-12 \" id=\"hd720\" target=\"blank\" style=\"height: 30px\">" +
             "            <a href=\"" + videoUrl+"\" >" +
             videoFormat + "(" + videoResolution + ")"
         "            </a>" +
