@@ -1,3 +1,6 @@
+
+
+
 function download() {
 
     var getVideoInfoUrl;
@@ -10,7 +13,7 @@ function download() {
 
 
     var jsontree = [];
-
+    var titlevalue;
 
     $.ajax({
         url: getVideoInfoUrl,
@@ -18,6 +21,7 @@ function download() {
         dataType: 'JSON',
         success: function (result) {
             jsontree = result;
+            //first time get info
             $.each(jsontree, function (key, value) {
                 if (key == "success") {
 
@@ -33,6 +37,7 @@ function download() {
 
                 }
                 if (key == "title") {
+                    titlevalue=value;
                     var title = "<p style=\"font-size: medium;font-weight: bold \"> " + value + " </p>  ";
                     $("#title").append(title);
                 }
@@ -50,50 +55,51 @@ function download() {
                 //     var description = "<p style=\"font-size: medium; \">  Description: " + value + " </p>  ";
                 //     $("#description").append(description);
                 // }
-
+            });
+            //second time get link
+            $.each(jsontree, function (key, value) {
                 if (key == "audios") {
-
                     $.each(value, function (key, value) {
-                       var audioFormat;
-                       var audioAbr;
-                       var audioUrl;
-                       $.each(value, function (key, value) {
-                           if (key == "format_note"){
-                             audioFormat = value;
-                           }
-                           if (key == "abr"){
-                               audioAbr = value;
-                           }
-                           if (key == "url"){
-                               audioUrl = value;
-                           }
-                       })
-                       var audioHtml="<div class=\"col-md-12 \" id=\"hd720\" target=\"blank\" style=\"height: 30px\">" +
-                           "            <a href=\"" + audioUrl+"\" >" +
-                           audioFormat + "(" + audioAbr + "kbps)"
-                           "            </a>" +
-                           "          </div>"
-                       $("#audio").append(audioHtml);
-                   })
+                        var audioFormat;
+                        var audioAbr;
+                        var audioUrl;
+                        $.each(value, function (key, value) {
+                            if (key == "format_note") {
+                                audioFormat = value;
+                            }
+                            if (key == "abr") {
+                                audioAbr = value;
+                            }
+                            if (key == "url") {
+                                audioUrl = value;
+                            }
+                        })
+                        var audioHtml = "<div class=\"col-md-12 \" id=\"hd720\" target=\"blank\" style=\"height: 30px\">" +
+                            "            <a download=\" " + titlevalue + "\"href=\"" + audioUrl + "\" >" +
+                            audioFormat + "(" + audioAbr + "kbps)"
+                        "            </a>" +
+                        "          </div>"
+                        $("#audio").append(audioHtml);
+                    })
 
                 }
                 if (key == "videosSmall") {
-                    addListToHtml(value);
+                    addListToHtml(value, titlevalue);
                 }
                 if (key == "videosMedium") {
-                    addListToHtml(value);
+                    addListToHtml(value, titlevalue);
                 }
                 if (key == "videoHd720") {
-                    addListToHtml(value);
+                    addListToHtml(value, titlevalue);
                 }
-            });
+            })
         }
     });
 
 
 }
 
-function  addListToHtml(value) {
+function  addListToHtml(value,title) {
     $.each(value, function (key, value) {
         var videoFormat;
         var videoResolution ;
@@ -109,8 +115,9 @@ function  addListToHtml(value) {
                 videoUrl = value;
             }
         })
-        var videoHtml="<div class=\"col-md-12 \" id=\"hd720\" target=\"blank\" style=\"height: 30px\">" +
-            "            <a href=\"" + videoUrl+"\" >" +
+
+        var videoHtml="<div class=\"col-md-12 \" id=\"hd720\"  style=\"height: 30px\">" +
+            "            <a  download=\"" + title +"\"  rel=\"nofollow\"  href=\"" + videoUrl+"\" >" +
             videoFormat + "(" + videoResolution + ")"
         "            </a>" +
         "          </div>"
@@ -118,3 +125,4 @@ function  addListToHtml(value) {
     })
 
 }
+
