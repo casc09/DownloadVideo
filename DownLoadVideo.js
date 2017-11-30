@@ -1,5 +1,5 @@
 
-
+var urlvalue;
 
 function download() {
 
@@ -132,8 +132,9 @@ function  addListToHtml(value,title) {
 
         })
 
+        urlvalue = videoUrl;
         var videoHtml="<div class=\"col-md-12 \" id =  "+ format_id + " style=\"height: 30px\"> " +
-            "            <a   onclick='clicklink(this.value)' class=\"downloadLink\" value= '" + videoUrl + " 'style= \"cursor:pointer\" > " +
+            "            <a   onclick=\"clicklink()\" class=\"downloadLink\" style= \" cursor:pointer \" > " +
             videoFormat + "(" + videoResolution + ")"
         "            </a>" +
         "          </div>"
@@ -142,14 +143,19 @@ function  addListToHtml(value,title) {
 
 }
 
-function clicklink(value) {
+function clicklink() {
 
-        var url ;
-        url="DownloadResult.html?q="+ value;
-        location.href = url;
+    var url ;
+    url="DownloadResult.html?q=" + urlvalue;
+    location.href = url;
 
 
-    var duration = "<p style=\"font-size: medium; \">  Duration: "  + " min "+ value+
-        " s</p>  ";
-    $("#myDiv").append(duration);
+}
+
+function startDownload() {
+
+    var url = window.location.href;
+    url = url.split("?q=")[1];
+
+
 }
