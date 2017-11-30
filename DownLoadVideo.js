@@ -14,6 +14,7 @@ function download() {
 
     var jsontree = [];
     var titlevalue;
+    var justDashVideo;
 
     $.ajax({
         url: getVideoInfoUrl,
@@ -55,6 +56,10 @@ function download() {
                 //     var description = "<p style=\"font-size: medium; \">  Description: " + value + " </p>  ";
                 //     $("#description").append(description);
                 // }
+
+                if (key == "justDashVideo"){
+                    justDashVideo = value;
+                }
             });
             //second time get link
             $.each(jsontree, function (key, value) {
@@ -75,7 +80,7 @@ function download() {
                             }
                         })
                         var audioHtml = "<div class=\"col-md-12 \" id=\"hd720\" target=\"blank\" style=\"height: 30px\">" +
-                            "            <a download=\" " + titlevalue + "\"href=\"" + audioUrl + "\" >" +
+                            "            <a   class=\"downloadLink\" download=\" " + titlevalue + "\"href=\"" + audioUrl + "\" >" +
                             audioFormat + "(" + audioAbr + "kbps)"
                         "            </a>" +
                         "          </div>"
@@ -92,6 +97,12 @@ function download() {
                 if (key == "videoHd720") {
                     addListToHtml(value, titlevalue);
                 }
+                if (justDashVideo == "yes"){
+                    if (key == "videoDash"){
+                        addListToHtml(value,titlevalue);
+                    }
+                }
+
             })
         }
     });
@@ -104,6 +115,7 @@ function  addListToHtml(value,title) {
         var videoFormat;
         var videoResolution ;
         var videoUrl;
+        var format_id;
         $.each(value, function (key, value) {
             if (key == "ext"){
                 videoFormat = value;
@@ -114,10 +126,14 @@ function  addListToHtml(value,title) {
             if (key == "url"){
                 videoUrl = value;
             }
+            if (key == "format_id"){
+                format_id = value;
+            }
+
         })
 
-        var videoHtml="<div class=\"col-md-12 \" id=\"hd720\"  style=\"height: 30px\">" +
-            "            <a  download=\"" + title +"\"  rel=\"nofollow\"  href=\"" + videoUrl+"\" >" +
+        var videoHtml="<div class=\"col-md-12 \" id =  "+ format_id + " style=\"height: 30px\"> " +
+            "            <a   onclick='clicklink(this.value)' class=\"downloadLink\" value= '" + videoUrl + " 'style= \"cursor:pointer\" > " +
             videoFormat + "(" + videoResolution + ")"
         "            </a>" +
         "          </div>"
@@ -126,3 +142,14 @@ function  addListToHtml(value,title) {
 
 }
 
+function clicklink(value) {
+
+        var url ;
+        url="DownloadResult.html?q="+ value;
+        location.href = url;
+
+
+    var duration = "<p style=\"font-size: medium; \">  Duration: "  + " min "+ value+
+        " s</p>  ";
+    $("#myDiv").append(duration);
+}
