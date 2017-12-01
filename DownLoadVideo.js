@@ -1,6 +1,7 @@
 
 var urlvalue;
-
+var titlevalue;
+var urlvalueaudio;
 function download() {
 
     var getVideoInfoUrl;
@@ -13,7 +14,6 @@ function download() {
 
 
     var jsontree = [];
-    var titlevalue;
     var justDashVideo;
 
     $.ajax({
@@ -80,7 +80,8 @@ function download() {
                             }
                         })
                         var audioHtml = "<div class=\"col-md-12 \" id=\"hd720\" target=\"blank\" style=\"height: 30px\">" +
-                            "            <a   class=\"downloadLink\" download=\" " + titlevalue + "\"href=\"" + audioUrl + "\" >" +
+                            "            <a   onclick=\"clicklinkAudio(this)\"   id="+ audioUrl+
+                            " class=\"downloadLink\" style= \" cursor:pointer \" > " +
                             audioFormat + "(" + audioAbr + "kbps)"
                         "            </a>" +
                         "          </div>"
@@ -132,9 +133,9 @@ function  addListToHtml(value,title) {
 
         })
 
-        urlvalue = videoUrl;
         var videoHtml="<div class=\"col-md-12 \" id =  "+ format_id + " style=\"height: 30px\"> " +
-            "            <a   onclick=\"clicklink()\" class=\"downloadLink\" style= \" cursor:pointer \" > " +
+            "            <a   onclick=\"clicklink(this)\"   id="+ videoUrl+
+            " class=\"downloadLink\" style= \" cursor:pointer \" > " +
             videoFormat + "(" + videoResolution + ")"
         "            </a>" +
         "          </div>"
@@ -143,10 +144,21 @@ function  addListToHtml(value,title) {
 
 }
 
-function clicklink() {
+function clicklink(obj) {
 
     var url ;
+    urlvalue=obj.id;
     url="DownloadResult.html?q=" + urlvalue;
+    location.href = url;
+
+
+}
+
+function clicklinkAudio(obj) {
+
+    var url ;
+    urlvalueaudio=obj.id;
+    url="DownloadResult.html?q=" + urlvalueaudio;
     location.href = url;
 
 
@@ -157,5 +169,8 @@ function startDownload() {
     var url = window.location.href;
     url = url.split("?q=")[1];
 
+    var a= "<a id=\"link\" class=\"downloadLink\" download=\" " + titlevalue + "\"href=\"" + url + "\" >"
+    $('#myDiv').append(a);
+    $('#link')[0].click();
 
 }
