@@ -10,7 +10,7 @@ function download() {
 
 
     // videoUrl = $("#videoUrl").val();
-    getVideoInfoUrl = "http://67.209.177.82:8000/search/?downloadUrl=" + url;
+    getVideoInfoUrl = "http://67.209.177.82:8001/search/?downloadUrl=" + url;
 
 
     var jsontree = [];
@@ -174,3 +174,5 @@ function startDownload() {
     $('#link')[0].click();
 
 }
+
+
