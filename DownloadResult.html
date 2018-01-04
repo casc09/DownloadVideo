@@ -50,7 +50,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Video Downloader</a>
+            <a class="navbar-brand" href="#">Video-Save.site</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right" >
@@ -88,7 +88,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2" >
             <!--hide-->
-            <h2 class="text-center" style="display:inline">Your download task has started . You can download another one.</h2>
+            <h2 class="text-center" style="display:inline">Your download will start shortly . You can download another one.</h2>
             <input type="text" id="videoUrl" class="form-control" style="height: 50px;margin-top: 2%"  id="" placeholder="Paste link  here .. Like https://www.youtube.com/watch?v=CoWs2_01S-4" >
             <div class="row">
                 <div class="col-md-12 " style="height: 20px"></div>
@@ -102,8 +102,12 @@
                     <script>
                         $("#getVideoBtn").click(function(){
                             var videoUrl = $("#videoUrl").val();
-                            url="VideoChoose.html?q="+videoUrl;
-                            location.href = url;
+                            if (videoUrl.length  == 0){
+                                alert("Please put the URL into the text box");
+                            }else {
+                                url = "VideoChoose.html?q=" + videoUrl;
+                                location.href = url;
+                            }
                         });
                     </script>
                 </div>

@@ -104,8 +104,12 @@
             <script>
               $("#getVideoBtn").click(function(){
                 var videoUrl = $("#videoUrl").val();
-                url="VideoChoose.html?q="+videoUrl;
-                location.href = url;
+                if (videoUrl.length  == 0){
+                  alert("Please put the URL into the text box");
+                }else {
+                  url = "VideoChoose.html?q=" + videoUrl;
+                  location.href = url;
+                }
               });
             </script>
           </div>
